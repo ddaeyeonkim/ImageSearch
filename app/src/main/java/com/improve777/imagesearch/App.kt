@@ -16,6 +16,11 @@ class App : Application(), DaggerComponentProvider {
     }
 
     private fun initAppComponent(): AppComponent {
-        return DaggerAppComponent.factory().create(applicationContext)
+        return DaggerAppComponent.factory()
+            .create(
+                applicationContext,
+                BuildConfig.DEBUG,
+                BuildConfig.KAKAO_API_KEY,
+            )
     }
 }
