@@ -1,6 +1,7 @@
 package com.improve777.imagesearch.di
 
 import com.improve777.imagesearch.data.remote.api.ImageApi
+import com.improve777.imagesearch.data.remote.util.EnumConverterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -28,6 +29,7 @@ object NetworkModule {
             .client(client)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(EnumConverterFactory())
             .build()
     }
 
