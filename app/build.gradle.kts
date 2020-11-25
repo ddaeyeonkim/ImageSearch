@@ -79,4 +79,6 @@ dependencies {
     kapt(Libraries.dagger2Compiler)
 
     implementation(Libraries.timber)
+
+    implementation(Libraries.threeTenABP)
 }

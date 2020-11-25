@@ -41,6 +41,7 @@ object Versions {
     const val dagger2 = "2.30"
 
     const val timber = "4.7.1"
+    const val threeTenABP = "1.3.0"
 }
 
 object Libraries {
@@ -105,6 +106,9 @@ object Libraries {
 
     // logger
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+
+    // java date
+    const val threeTenABP = "com.jakewharton.threetenabp:threetenabp:${Versions.threeTenABP}"
 }
 
 object BuildPlugins {
