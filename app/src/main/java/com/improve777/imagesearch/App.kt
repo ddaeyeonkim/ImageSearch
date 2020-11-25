@@ -23,7 +23,7 @@ class App : Application(), DaggerComponentProvider {
             .create(
                 applicationContext,
                 BuildConfig.DEBUG,
-                BuildConfig.KAKAO_API_KEY,
+                BuildConfig.KAKAO_API_URL,
             )
     }
 
