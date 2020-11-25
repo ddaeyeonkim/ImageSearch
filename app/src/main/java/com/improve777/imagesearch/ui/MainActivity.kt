@@ -30,6 +30,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
     private fun initRecyclerView() {
         binding.rvImages.adapter = adapter
+        adapter.addLoadStateListener {
+            viewModel.fetchEmpty(adapter.itemCount < 1)
+        }
     }
 
     private fun observeViewModel() {

@@ -22,6 +22,9 @@ class MainViewModel @Inject constructor(
     private val imageRepository: ImageRepository,
 ) : BaseViewModel() {
 
+    private val _isEmptyImages = MutableLiveData(true)
+    val isEmptyImages: LiveData<Boolean> = _isEmptyImages
+
     private val serialDisposable = SerialDisposable()
     private val searchSubject = BehaviorSubject.create<String>()
 
@@ -54,5 +57,9 @@ class MainViewModel @Inject constructor(
 
     fun onAfterTextChanged(text: String?) {
         searchSubject.onNext(text ?: "")
+    }
+
+    fun fetchEmpty(isEmpty: Boolean) {
+        _isEmptyImages.value = isEmpty
     }
 }
