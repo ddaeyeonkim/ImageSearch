@@ -1,6 +1,7 @@
 package com.improve777.imagesearch.di
 
 import android.content.Context
+import com.improve777.imagesearch.ui.MainComponent
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -10,6 +11,7 @@ import javax.inject.Singleton
     modules = [
         ApiKeyModule::class,
         NetworkModule::class,
+        AppSubComponentModule::class,
         ViewModelFactoryModule::class,
     ]
 )
@@ -23,4 +25,6 @@ interface AppComponent {
             @BindsInstance baseUrl: String,
         ): AppComponent
     }
+
+    fun mainFactory(): MainComponent.Factory
 }
