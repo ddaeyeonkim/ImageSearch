@@ -8,6 +8,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
+        ApiKeyModule::class,
         NetworkModule::class,
         ViewModelFactoryModule::class,
     ]
