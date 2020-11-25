@@ -17,8 +17,25 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
+    private val adapter: ImagePagingDataAdapter by lazy { ImagePagingDataAdapter(ImageDiffCallback()) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         injector.mainFactory().create().inject(this)
         super.onCreate(savedInstanceState)
+        binding.vm = viewModel
+
+        initRecyclerView()
+        observeViewModel()
+    }
+
+    private fun initRecyclerView() {
+        binding.rvImages.adapter = adapter
+    }
+
+    private fun observeViewModel() {
+        viewModel.images.observe(
+            this,
+            { adapter.submitData(lifecycle, it) }
+        )
     }
 }
