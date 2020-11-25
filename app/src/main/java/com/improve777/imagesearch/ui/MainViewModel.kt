@@ -25,6 +25,9 @@ class MainViewModel @Inject constructor(
     private val _isEmptyImages = MutableLiveData(true)
     val isEmptyImages: LiveData<Boolean> = _isEmptyImages
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
     private val serialDisposable = SerialDisposable()
     private val searchSubject = BehaviorSubject.create<String>()
 
@@ -37,7 +40,8 @@ class MainViewModel @Inject constructor(
 
     private fun subscribeSearchBar() {
         searchSubject
-            .observeOn(Schedulers.computation())
+            .subscribeOn(Schedulers.computation())
+            .doOnNext { fetchLoading(true) }
             .debounce(1000, TimeUnit.MILLISECONDS)
             .distinctUntilChanged()
             .onErrorResumeNext(Observable.just(""))
@@ -50,9 +54,14 @@ class MainViewModel @Inject constructor(
             .cachedIn(viewModelScope)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { fetchLoading(false) }
             .subscribeBy(onNext = _images::setValue)
             .also(serialDisposable::set)
             .addTo(compositeDisposable)
+    }
+
+    private fun fetchLoading(isLoading: Boolean) {
+        _isLoading.value = isLoading
     }
 
     fun onAfterTextChanged(text: String?) {
