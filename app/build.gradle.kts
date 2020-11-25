@@ -87,4 +87,7 @@ dependencies {
     implementation(Libraries.timber)
 
     implementation(Libraries.threeTenABP)
+
+    implementation(Libraries.glide)
+    kapt(Libraries.glideCompiler)
 }
