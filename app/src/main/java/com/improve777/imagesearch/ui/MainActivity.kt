@@ -2,13 +2,16 @@ package com.improve777.imagesearch.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.improve777.imagesearch.R
+import com.improve777.imagesearch.base.BaseActivity
+import com.improve777.imagesearch.databinding.ActivityMainBinding
 import com.improve777.imagesearch.di.injector
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>(
+    layoutId = R.layout.activity_main,
+) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -17,6 +20,5 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         injector.mainFactory().create().inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
     }
 }
