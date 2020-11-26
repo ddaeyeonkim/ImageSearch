@@ -5,4 +5,5 @@
     <string name="search_input_hint">검색어를 입력해주세요.</string>
     <string name="datetime_sample">2020년 10월 22일 16시 23분 39초</string>
     <string name="display_sitename_sample">티스토리</string>
+    <string name="internet_disconnected_msg">인터넷 연결 상태를 확인해주세요.</string>
 </resources>

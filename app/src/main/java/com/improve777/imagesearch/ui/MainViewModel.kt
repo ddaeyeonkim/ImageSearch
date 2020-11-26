@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
+import com.improve777.imagesearch.R
 import com.improve777.imagesearch.base.BaseViewModel
 import com.improve777.imagesearch.domain.model.Image
 import com.improve777.imagesearch.domain.repository.ImageRepository
@@ -19,6 +20,8 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
+import retrofit2.HttpException
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -31,6 +34,9 @@ class MainViewModel @Inject constructor(
 
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _toastEvent = MutableLiveData<Event<Int>>()
+    val toastEvent: LiveData<Event<Int>> = _toastEvent
 
     private val serialDisposable = SerialDisposable()
     private val searchSubject = BehaviorSubject.create<String>()
@@ -65,9 +71,19 @@ class MainViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { fetchLoading(false) }
             .doOnError { fetchLoading(false) }
-            .subscribeBy(onNext = _images::setValue)
+            .subscribeBy(
+                onError = ::onErrorHandle,
+                onNext = _images::setValue
+            )
             .also(serialDisposable::set)
             .addTo(compositeDisposable)
+    }
+
+    fun onErrorHandle(t: Throwable) {
+        Timber.e(t)
+        if (t is HttpException) {
+            _toastEvent.value = Event(R.string.internet_disconnected_msg)
+        }
     }
 
     private fun fetchLoading(isLoading: Boolean) {

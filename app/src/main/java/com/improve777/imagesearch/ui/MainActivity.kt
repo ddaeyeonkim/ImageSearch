@@ -1,8 +1,10 @@
 package com.improve777.imagesearch.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.LoadState
 import com.improve777.imagesearch.R
 import com.improve777.imagesearch.base.BaseActivity
 import com.improve777.imagesearch.databinding.ActivityMainBinding
@@ -37,6 +39,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             addItemDecoration(ImageItemDecoration(dp2px(2)))
         }
         adapter.addLoadStateListener {
+            if (it.refresh is LoadState.Error) {
+                viewModel.onErrorHandle((it.refresh as LoadState.Error).error)
+            }
+            if (it.append is LoadState.Error) {
+                viewModel.onErrorHandle((it.append as LoadState.Error).error)
+            }
             viewModel.fetchEmpty(adapter.itemCount < 1)
         }
     }
@@ -53,6 +61,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                 startActivity(
                     ImageViewerActivity.getIntent(this, it)
                 )
+            }
+        )
+
+        viewModel.toastEvent.observe(
+            this,
+            EventObserver {
+                Toast.makeText(this, getString(it), Toast.LENGTH_SHORT).show()
             }
         )
     }
