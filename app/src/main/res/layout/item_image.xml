@@ -9,7 +9,7 @@
             type="com.improve777.imagesearch.ui.OnClickImageListener" />
         <variable
             name="item"
-            type="com.improve777.imagesearch.domain.model.Image" />
+            type="com.improve777.imagesearch.ui.model.ImageVO" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

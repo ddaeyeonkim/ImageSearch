@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.improve777.imagesearch.R
 import com.improve777.imagesearch.databinding.ItemImageBinding
-import com.improve777.imagesearch.domain.model.Image
+import com.improve777.imagesearch.ui.model.ImageVO
 
 class ImagePagingDataAdapter(
     private val onClickImageListener: OnClickImageListener,
-    diffCallback: DiffUtil.ItemCallback<Image>
-) : PagingDataAdapter<Image, ImageViewHolder>(diffCallback) {
+    diffCallback: DiffUtil.ItemCallback<ImageVO>
+) : PagingDataAdapter<ImageVO, ImageViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         return ImageViewHolder(
@@ -34,7 +34,7 @@ class ImagePagingDataAdapter(
 }
 
 interface OnClickImageListener {
-    fun onClickImage(image: Image)
+    fun onClickImage(image: ImageVO)
 }
 
 class ImageViewHolder(
@@ -46,18 +46,18 @@ class ImageViewHolder(
         binding.action = onClickImageListener
     }
 
-    fun bind(item: Image?) {
+    fun bind(item: ImageVO?) {
         binding.item = item
     }
 }
 
-class ImageDiffCallback : DiffUtil.ItemCallback<Image>() {
+class ImageDiffCallback : DiffUtil.ItemCallback<ImageVO>() {
 
-    override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
+    override fun areItemsTheSame(oldItem: ImageVO, newItem: ImageVO): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {
+    override fun areContentsTheSame(oldItem: ImageVO, newItem: ImageVO): Boolean {
         return oldItem == newItem
     }
 }

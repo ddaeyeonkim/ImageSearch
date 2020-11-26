@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
 import com.improve777.imagesearch.base.BaseViewModel
 import com.improve777.imagesearch.domain.model.Image
@@ -18,7 +19,6 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -35,8 +35,8 @@ class MainViewModel @Inject constructor(
     private val serialDisposable = SerialDisposable()
     private val searchSubject = BehaviorSubject.create<String>()
 
-    private val _images = MutableLiveData<PagingData<Image>>()
-    val images: LiveData<PagingData<Image>> = _images
+    private val _images = MutableLiveData<PagingData<ImageVO>>()
+    val images: LiveData<PagingData<ImageVO>> = _images
 
     private val _actionImageViewer = MutableLiveData<Event<ImageVO>>()
     val actionImageViewer: LiveData<Event<ImageVO>> = _actionImageViewer
@@ -59,7 +59,8 @@ class MainViewModel @Inject constructor(
     private fun searchImages(text: String) {
         imageRepository.getImages(text, 1, 30)
             .cachedIn(viewModelScope)
-            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.computation())
+            .map { it.map(Image::toVO) }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { fetchLoading(false) }
             .subscribeBy(onNext = _images::setValue)
@@ -79,8 +80,7 @@ class MainViewModel @Inject constructor(
         _isEmptyImages.value = isEmpty
     }
 
-    override fun onClickImage(image: Image) {
-        Timber.e(image.toString())
-        _actionImageViewer.value = Event(image.toVO())
+    override fun onClickImage(imageVO: ImageVO) {
+        _actionImageViewer.value = Event(imageVO)
     }
 }
