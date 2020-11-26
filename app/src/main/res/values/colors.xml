@@ -7,12 +7,8 @@
     <color name="toolbar_background">@color/white</color>
 
     <color name="red_main">#ff1f4b</color>
-    <color name="red_main_dark">#ff1f4b</color>
-    <color name="red_main_light">#ff1f4b</color>
-
     <color name="golden_main">#d3a064</color>
-    <color name="golden_dark">#9f7238</color>
-    <color name="golden_light">#ffd193</color>
+
     <color name="image_info_bg">#aaffffff</color>
     <color name="shimmer_color">#e0e0e0</color>
 </resources>
