@@ -8,6 +8,7 @@ import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
 import com.improve777.imagesearch.R
 import com.improve777.imagesearch.base.BaseViewModel
+import com.improve777.imagesearch.data.remote.exception.EmptyQueryException
 import com.improve777.imagesearch.domain.model.Image
 import com.improve777.imagesearch.domain.repository.ImageRepository
 import com.improve777.imagesearch.ui.mapper.toVO
@@ -20,7 +21,6 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
-import retrofit2.HttpException
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -81,7 +81,9 @@ class MainViewModel @Inject constructor(
 
     fun onErrorHandle(t: Throwable) {
         Timber.e(t)
-        if (t is HttpException) {
+        if (t is EmptyQueryException) {
+            _toastEvent.value = Event(R.string.search_input_hint)
+        } else {
             _toastEvent.value = Event(R.string.internet_disconnected_msg)
         }
     }

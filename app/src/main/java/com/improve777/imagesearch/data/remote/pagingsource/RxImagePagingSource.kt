@@ -2,6 +2,8 @@ package com.improve777.imagesearch.data.remote.pagingsource
 
 import androidx.paging.rxjava2.RxPagingSource
 import com.improve777.imagesearch.data.RemoteImageDataSource
+import com.improve777.imagesearch.data.remote.exception.EmptyQueryException
+import com.improve777.imagesearch.data.remote.exception.NetworkException
 import com.improve777.imagesearch.domain.model.Image
 import com.improve777.imagesearch.domain.model.ImagePage
 import io.reactivex.Single
@@ -20,7 +22,13 @@ class RxImagePagingSource(
         return remote.getImages(query, nextPageNumber, size)
             .subscribeOn(Schedulers.io())
             .map(this::toLoadResult)
-            .onErrorReturn { LoadResult.Error(it) }
+            .onErrorReturn {
+                if (query.isEmpty()) {
+                    LoadResult.Error(EmptyQueryException(it))
+                } else {
+                    LoadResult.Error(NetworkException(it))
+                }
+            }
     }
 
     private fun toLoadResult(page: ImagePage): LoadResult<Int, Image> {
