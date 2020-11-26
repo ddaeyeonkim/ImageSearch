@@ -34,7 +34,7 @@ class ImagePagingDataAdapter(
 }
 
 interface OnClickImageListener {
-    fun onClickImage(image: ImageVO)
+    fun onClickImage(imageVO: ImageVO)
 }
 
 class ImageViewHolder(
