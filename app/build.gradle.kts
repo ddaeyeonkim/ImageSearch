@@ -91,4 +91,6 @@ dependencies {
 
     implementation(Libraries.glide)
     kapt(Libraries.glideCompiler)
+
+    implementation(Libraries.shimmer)
 }

@@ -43,6 +43,8 @@ object Versions {
 
     const val timber = "4.7.1"
     const val threeTenABP = "1.3.0"
+
+    const val shimmer = "0.5.0"
 }
 
 object Libraries {
@@ -111,6 +113,9 @@ object Libraries {
 
     // java date
     const val threeTenABP = "com.jakewharton.threetenabp:threetenabp:${Versions.threeTenABP}"
+
+    // shimmer
+    const val shimmer = "com.facebook.shimmer:shimmer:${Versions.shimmer}"
 }
 
 object BuildPlugins {

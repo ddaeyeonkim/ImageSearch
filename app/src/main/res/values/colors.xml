@@ -13,4 +13,5 @@
     <color name="golden_dark">#9f7238</color>
     <color name="golden_light">#ffd193</color>
     <color name="image_info_bg">#aaffffff</color>
+    <color name="shimmer_color">#e0e0e0</color>
 </resources>
