@@ -2,6 +2,7 @@ package com.improve777.imagesearch.di
 
 import android.content.Context
 import com.improve777.imagesearch.ui.MainComponent
+import com.improve777.imagesearch.ui.viewer.ImageViewerComponent
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -29,4 +30,5 @@ interface AppComponent {
     }
 
     fun mainFactory(): MainComponent.Factory
+    fun imageViewerFactory(): ImageViewerComponent.Factory
 }
