@@ -53,6 +53,7 @@ dependencies {
     implementation(Libraries.appcompat)
     implementation(Libraries.material)
     implementation(Libraries.constraintLayout)
+    implementation(Libraries.swiperefreshlayout)
     implementation(Libraries.coreKtx)
     implementation(Libraries.activityKtx)
 

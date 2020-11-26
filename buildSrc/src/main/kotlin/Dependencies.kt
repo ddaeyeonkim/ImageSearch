@@ -12,6 +12,7 @@ object Versions {
     const val appcompat = "1.2.0"
     const val material = "1.2.1"
     const val constraintLayout = "1.1.3"
+    const val swiperefreshlayout = "1.1.0"
     const val coreKtx = "1.1.0"
     const val activityKtx = "1.1.0"
 
@@ -55,6 +56,7 @@ object Libraries {
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
     const val material = "com.google.android.material:material:${Versions.material}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
+    const val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swiperefreshlayout}"
     const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
     const val activityKtx = "androidx.activity:activity-ktx:${Versions.activityKtx}"
     const val liveDataTesting = "androidx.arch.core:core-testing:2.1.0"
