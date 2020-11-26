@@ -48,10 +48,11 @@ class MainViewModel @Inject constructor(
     private fun subscribeSearchBar() {
         searchSubject
             .subscribeOn(Schedulers.computation())
-            .doOnNext { fetchLoading(true) }
             .debounce(1000, TimeUnit.MILLISECONDS)
             .distinctUntilChanged()
             .onErrorResumeNext(Observable.just(""))
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { fetchLoading(true) }
             .subscribeBy(onNext = this::searchImages)
             .addTo(compositeDisposable)
     }
@@ -63,6 +64,7 @@ class MainViewModel @Inject constructor(
             .map { it.map(Image::toVO) }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { fetchLoading(false) }
+            .doOnError { fetchLoading(false) }
             .subscribeBy(onNext = _images::setValue)
             .also(serialDisposable::set)
             .addTo(compositeDisposable)
