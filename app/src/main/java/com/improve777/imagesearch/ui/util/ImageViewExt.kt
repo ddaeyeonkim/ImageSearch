@@ -20,7 +20,7 @@ fun ImageView.loadUrl(link: ImageLinkVO?) {
         .load(link?.url)
         .override(this.width, this.height)
         .placeholder(context.getShimmerDrawable())
-        .error(R.drawable.ic_launcher_background)
+        .error(R.drawable.ic_error_image_bg)
         .centerCrop()
         .transform(RoundedCorners(20))
         .transition(DrawableTransitionOptions.withCrossFade(150))
@@ -34,7 +34,7 @@ fun ImageView.loadFullUrl(link: ImageLinkVO?) {
     Glide.with(this)
         .load(link?.url)
         .placeholder(circularProgressDrawable)
-        .error(R.drawable.ic_launcher_background)
+        .error(R.drawable.ic_not_found)
         .transition(DrawableTransitionOptions.withCrossFade(150))
         .into(this)
 }
