@@ -6,6 +6,8 @@ import com.improve777.imagesearch.domain.model.ImageLink
 import com.improve777.imagesearch.domain.model.ImagePage
 import com.improve777.imagesearch.domain.model.Meta
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
+import timber.log.Timber
 
 fun ImagesResponse.toDomain(page: Int) = ImagePage(
     meta = Meta(
@@ -21,8 +23,9 @@ fun ImagesResponse.toDomain(page: Int) = ImagePage(
             imageUrl = ImageLink(url = it.imageUrl ?: ""),
             displaySiteName = it.displaySiteName ?: "",
             dataTime = try {
-                LocalDateTime.parse(it.datetime)
+                LocalDateTime.parse(it.datetime, DateTimeFormatter.ISO_ZONED_DATE_TIME)
             } catch (e: Exception) {
+                Timber.e(e)
                 null
             },
         )
