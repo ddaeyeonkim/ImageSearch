@@ -3,4 +3,5 @@
     <color name="image_info_bg">#aa000000</color>
     <color name="color_accent">@color/golden_main</color>
     <color name="shimmer_color">#424242</color>
+    <color name="toolbar_background">#232323</color>
 </resources>
