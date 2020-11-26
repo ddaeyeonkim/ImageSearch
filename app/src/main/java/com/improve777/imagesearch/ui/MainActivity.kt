@@ -8,6 +8,7 @@ import com.improve777.imagesearch.base.BaseActivity
 import com.improve777.imagesearch.databinding.ActivityMainBinding
 import com.improve777.imagesearch.di.injector
 import com.improve777.imagesearch.ui.util.EventObserver
+import com.improve777.imagesearch.ui.util.dp2px
 import com.improve777.imagesearch.ui.viewer.ImageViewerActivity
 import javax.inject.Inject
 
@@ -31,7 +32,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
     private fun initRecyclerView() {
-        binding.rvImages.adapter = adapter
+        binding.rvImages.apply {
+            adapter = this@MainActivity.adapter
+            addItemDecoration(ImageItemDecoration(dp2px(2)))
+        }
         adapter.addLoadStateListener {
             viewModel.fetchEmpty(adapter.itemCount < 1)
         }
