@@ -8,6 +8,9 @@ import androidx.paging.rxjava2.cachedIn
 import com.improve777.imagesearch.base.BaseViewModel
 import com.improve777.imagesearch.domain.model.Image
 import com.improve777.imagesearch.domain.repository.ImageRepository
+import com.improve777.imagesearch.ui.mapper.toVO
+import com.improve777.imagesearch.ui.model.ImageVO
+import com.improve777.imagesearch.ui.util.Event
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.SerialDisposable
@@ -15,12 +18,13 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val imageRepository: ImageRepository,
-) : BaseViewModel() {
+) : BaseViewModel(), OnClickImageListener {
 
     private val _isEmptyImages = MutableLiveData(true)
     val isEmptyImages: LiveData<Boolean> = _isEmptyImages
@@ -33,6 +37,9 @@ class MainViewModel @Inject constructor(
 
     private val _images = MutableLiveData<PagingData<Image>>()
     val images: LiveData<PagingData<Image>> = _images
+
+    private val _actionImageViewer = MutableLiveData<Event<ImageVO>>()
+    val actionImageViewer: LiveData<Event<ImageVO>> = _actionImageViewer
 
     init {
         subscribeSearchBar()
@@ -70,5 +77,10 @@ class MainViewModel @Inject constructor(
 
     fun fetchEmpty(isEmpty: Boolean) {
         _isEmptyImages.value = isEmpty
+    }
+
+    override fun onClickImage(image: Image) {
+        Timber.e(image.toString())
+        _actionImageViewer.value = Event(image.toVO())
     }
 }

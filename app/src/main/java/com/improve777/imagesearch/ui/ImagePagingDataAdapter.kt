@@ -11,6 +11,7 @@ import com.improve777.imagesearch.databinding.ItemImageBinding
 import com.improve777.imagesearch.domain.model.Image
 
 class ImagePagingDataAdapter(
+    private val onClickImageListener: OnClickImageListener,
     diffCallback: DiffUtil.ItemCallback<Image>
 ) : PagingDataAdapter<Image, ImageViewHolder>(diffCallback) {
 
@@ -21,7 +22,8 @@ class ImagePagingDataAdapter(
                 R.layout.item_image,
                 parent,
                 false
-            )
+            ),
+            onClickImageListener
         )
     }
 
@@ -31,7 +33,18 @@ class ImagePagingDataAdapter(
     }
 }
 
-class ImageViewHolder(private val binding: ItemImageBinding) : RecyclerView.ViewHolder(binding.root) {
+interface OnClickImageListener {
+    fun onClickImage(image: Image)
+}
+
+class ImageViewHolder(
+    private val binding: ItemImageBinding,
+    onClickImageListener: OnClickImageListener,
+) : RecyclerView.ViewHolder(binding.root) {
+
+    init {
+        binding.action = onClickImageListener
+    }
 
     fun bind(item: Image?) {
         binding.item = item

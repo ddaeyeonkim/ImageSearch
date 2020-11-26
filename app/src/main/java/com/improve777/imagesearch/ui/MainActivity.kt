@@ -7,6 +7,8 @@ import com.improve777.imagesearch.R
 import com.improve777.imagesearch.base.BaseActivity
 import com.improve777.imagesearch.databinding.ActivityMainBinding
 import com.improve777.imagesearch.di.injector
+import com.improve777.imagesearch.ui.util.EventObserver
+import com.improve777.imagesearch.ui.viewer.ImageViewerActivity
 import javax.inject.Inject
 
 class MainActivity : BaseActivity<ActivityMainBinding>(
@@ -17,7 +19,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
-    private val adapter: ImagePagingDataAdapter by lazy { ImagePagingDataAdapter(ImageDiffCallback()) }
+    private val adapter: ImagePagingDataAdapter by lazy { ImagePagingDataAdapter(viewModel, ImageDiffCallback()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         injector.mainFactory().create().inject(this)
@@ -39,6 +41,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
         viewModel.images.observe(
             this,
             { adapter.submitData(lifecycle, it) }
+        )
+
+        viewModel.actionImageViewer.observe(
+            this,
+            EventObserver {
+                startActivity(
+                    ImageViewerActivity.getIntent(this, it)
+                )
+            }
         )
     }
 }

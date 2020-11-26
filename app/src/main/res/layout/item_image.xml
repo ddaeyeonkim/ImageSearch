@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="action"
+            type="com.improve777.imagesearch.ui.OnClickImageListener" />
         <variable
             name="item"
             type="com.improve777.imagesearch.domain.model.Image" />
@@ -12,6 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:onClick="@{() -> action.onClickImage(item)}"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
