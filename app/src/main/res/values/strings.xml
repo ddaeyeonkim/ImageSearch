@@ -3,4 +3,6 @@
 
     <string name="empty_search_result">검색 결과가 없습니다.</string>
     <string name="search_input_hint">검색어를 입력해주세요.</string>
+    <string name="datetime_sample">2020년 10월 22일 16시 23분 39초</string>
+    <string name="display_sitename_sample">티스토리</string>
 </resources>
