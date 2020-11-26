@@ -39,13 +39,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             addItemDecoration(ImageItemDecoration(dp2px(2)))
         }
         adapter.addLoadStateListener {
-            if (it.refresh is LoadState.Error) {
-                viewModel.onErrorHandle((it.refresh as LoadState.Error).error)
-            }
-            if (it.append is LoadState.Error) {
-                viewModel.onErrorHandle((it.append as LoadState.Error).error)
-            }
+            submitLoadStateError(it.refresh)
+            submitLoadStateError(it.append)
             viewModel.fetchEmpty(adapter.itemCount < 1)
+        }
+    }
+
+    private fun submitLoadStateError(loadState: LoadState) {
+        if (loadState is LoadState.Error) {
+            viewModel.onErrorHandle(loadState.error)
         }
     }
 
